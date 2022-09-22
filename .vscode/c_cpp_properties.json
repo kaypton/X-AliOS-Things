@@ -1,0 +1,18 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/components/libc/include",
+                "${workspaceFolder}/components/libc/include/sys",
+                "${workspaceFolder}/components/libfdt/include",
+                "${workspaceFolder}/components/libfdt/include/libfdt",
+                "${workspaceFolder}/hardware/arch/armv8a/include",
+                "${workspaceFolder}/kernel/rhino/include"
+            ],
+            "defines": []
+        }
+    ],
+    "version": 4
+}

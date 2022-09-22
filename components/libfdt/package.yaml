@@ -1,0 +1,26 @@
+name: libfdt 
+version: freebsd 
+description: libfdt
+type: common
+
+tag: device-tree
+keywords:
+  - base
+license: BSD
+
+build_config:
+  include:
+    - include 
+  internal_include:
+    - include/libfdt 
+
+source_file:
+  - fdt_addresses.c 
+  - fdt_empty_tree.c
+  - fdt_overlay.c 
+  - fdt_ro.c 
+  - fdt_rw.c
+  - fdt_strerror.c 
+  - fdt_sw.c
+  - fdt_wip.c 
+  - fdt.c 

@@ -1,0 +1,23 @@
+{
+    "files.associations": {
+        "atomic": "c",
+        "*.tcc": "c",
+        "vector": "c",
+        "string_view": "c",
+        "random": "c",
+        "functional": "c",
+        "istream": "c",
+        "tuple": "c",
+        "type_traits": "c",
+        "stdint.h": "c",
+        "stddef.h": "c",
+        "_types.h": "c",
+        "cdefs.h": "c",
+        "cstring": "c",
+        "k_types.h": "c",
+        "limits.h": "c",
+        "reg.h": "c",
+        "array": "c",
+        "string": "c"
+    }
+}

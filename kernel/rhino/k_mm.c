@@ -2,8 +2,8 @@
  * Copyright (C) 2015-2017 Alibaba Group Holding Limited
  */
 
-#include <stdio.h>
 #include <stdlib.h>
+#include <sys/libkernel.h>
 
 #include "k_api.h"
 
@@ -799,7 +799,7 @@ void *krhino_mm_alloc(size_t size)
 #endif
 
     if (size == 0) {
-        printf("WARNING, malloc size = 0\r\n");
+        k_printf("WARNING, malloc size = 0\r\n");
         return NULL;
     }
 
@@ -811,7 +811,7 @@ void *krhino_mm_alloc(size_t size)
 
         freesize = g_kmm_head->free_size;
 
-        printf("WARNING, malloc failed!!!! need size:%d, but free size:%d\r\n", size, freesize);
+        k_printf("WARNING, malloc failed!!!! need size:%d, but free size:%d\r\n", size, freesize);
 
         if (dumped) {
             return tmp;
@@ -861,7 +861,7 @@ void *krhino_mm_realloc(void *oldmem, size_t newsize)
     if (tmp == NULL && newsize != 0) {
 #if (RHINO_CONFIG_MM_DEBUG > 0)
         static int32_t reallocdumped;
-        printf("WARNING, realloc failed!!!! newsize : %d\r\n", newsize);
+        k_printf("WARNING, realloc failed!!!! newsize : %d\r\n", newsize);
         if (reallocdumped) {
             return tmp;
         }

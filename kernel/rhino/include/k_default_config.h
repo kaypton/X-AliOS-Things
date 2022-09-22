@@ -196,7 +196,7 @@
 #endif
 
 #ifndef RHINO_CONFIG_NEWLIBC_REENT
-#define RHINO_CONFIG_NEWLIBC_REENT           1
+#define RHINO_CONFIG_NEWLIBC_REENT           0
 #endif
 
 #if (RHINO_CONFIG_SCHED_CFS >= 1)

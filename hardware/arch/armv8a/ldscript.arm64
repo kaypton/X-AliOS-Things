@@ -1,0 +1,59 @@
+ENTRY(_start0)
+
+SECTIONS
+{
+    __image_start__ = 0x44000000;
+    . = __image_start__;
+
+    .init.head :
+    {
+        *(.init.head)
+        *(.el1vector.text)
+    }
+    
+    .text : 
+    {
+        *(.text)
+        *(.text*)
+    }
+
+    .rodata : 
+    {
+        *(.rodata)
+    }
+    
+    . = ALIGN(8);
+    .data :
+    {
+        *(.data)
+        KEEP(*(.asm.data))
+    }
+    
+    . = ALIGN(64);
+    __bss_start__ = .;
+    .bss :
+    {
+        *(.bss)
+    }
+    __bss_end__ = .;
+
+    .init.stack :
+    {
+        *(.init.stack)
+    }
+
+    . = ALIGN(64);
+    __image_end__ = .;
+
+    _init_heap = .;
+    . = _init_heap + 0x6400000;
+    _init_heap_top = .;
+
+    /DISCARD/ : 
+    { 
+        *(.note.gnu.build-id) 
+        //*(.eh_frame)
+        //*(.eh_frame_hdr)
+    }
+}
+

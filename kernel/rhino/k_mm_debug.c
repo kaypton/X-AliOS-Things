@@ -2,7 +2,7 @@
  * Copyright (C) 2015-2017 Alibaba Group Holding Limited
  */
 
-#include <stdio.h>
+#include <sys/libkernel.h>
 #include "k_api.h"
 
 #if AOS_COMP_DEBUG
@@ -14,7 +14,7 @@
 
 typedef int (*KMM_PRINT)(const char *fmt, ...);
 
-KMM_PRINT print = printf;
+KMM_PRINT print = k_printf;
 
 #if (RHINO_CONFIG_MM_DEBUG > 0)
 uint8_t g_mmlk_cnt;
