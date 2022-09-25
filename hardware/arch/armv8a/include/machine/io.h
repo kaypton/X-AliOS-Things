@@ -132,6 +132,10 @@ static __always_inline inline int test_bit(uintptr_t addr, unsigned int bit)
 	}
 
 RWZ_SYSREG_HELPER(mpidr_el1);
+RWZ_SYSREG_HELPER(cntfrq_el0);
+RWZ_SYSREG_HELPER(cntp_ctl_el0);
+RWZ_SYSREG_HELPER(cntp_tval_el0);
+RWZ_SYSREG_HELPER(cntpct_el0);
 
 #define BIT(n) (1UL << (n))
 #define BIT64(n) (1ULL << (n))

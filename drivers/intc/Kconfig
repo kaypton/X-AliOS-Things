@@ -1,0 +1,7 @@
+
+
+menu "Interrupt Controller"
+
+source "drivers/intc/Kconfig.gic"
+
+endmenu

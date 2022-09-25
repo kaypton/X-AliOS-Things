@@ -59,6 +59,7 @@ void dt_cpu_init(const char *fdt)
 
     k_printf(CPU_INIT_PRT"cpu num %d\r\n", cpu_num);
 
+    // TODO init gicv3 redistributor should not be here!
     gicv3_rdist_base = krhino_mm_alloc(sizeof(uintptr_t) * cpu_num);
     gicv3_rdist_num = cpu_num;
 

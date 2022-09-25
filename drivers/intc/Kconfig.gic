@@ -1,0 +1,29 @@
+
+config GIC
+	bool 
+
+config GIC_V1
+	bool 
+	select GIC
+	help
+		The ARM Generic Interrupt Controller v1
+
+config GIC_V2
+	bool 
+	select GIC 
+	help
+		The ARM Generic Interrupt Controller v2
+
+config GIC_V3
+	bool 
+	select GIC
+	help 
+		The ARM Generic Interrupt Controller v3
+
+config GIC_VER
+	int
+	depends on GIC
+	default 1 if GIC_V1
+	default 2 if GIC_V2
+	default 3 if GIC_V3
+

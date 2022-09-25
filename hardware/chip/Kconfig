@@ -1,0 +1,6 @@
+menu "SoC/CPU/Chip Configuration Selection"
+
+source "hardware/chip/qemu_arm64/Kconfig"
+
+endmenu 
+

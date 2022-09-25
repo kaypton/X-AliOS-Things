@@ -13,6 +13,7 @@ uintptr_t gicv3_dist_base;
 uint64_t gicv3_dist_size;
 
 uintptr_t *gicv3_rdist_base;
+uint64_t gicv3_rdist_size;
 int gicv3_rdist_num;
 
 static uintptr_t __gic_get_rdist(void)
@@ -180,9 +181,9 @@ static void __gicv3_cpuif_init(void)
 }
 
 /*
-Both the Distributor and the CPU interfaces are disabled at reset. 
-The GIC must be initialized after reset 
-before it can deliver interrupts to the core.
+    Both the Distributor and the CPU interfaces are disabled at reset. 
+    The GIC must be initialized after reset 
+    before it can deliver interrupts to the core.
 */
 void gicv3_init(void)
 {
@@ -196,14 +197,25 @@ void gicv3_init(void)
 
 void dt_gicv3_init(const void *fdt, int offset)
 {
-    int len, rdist_region_num, i;
+    int len, rdist_region_num, i, j, k, l, tmp, rdist_size;
     const struct fdt_property *fpp;
     fdt32_t *arr;
     int size_cells, address_cells;
+    uintptr_t address;
+    uint64_t size;
+
+    fdt_get_property(fdt, offset, "interrupt-controller", &len);
+    if(len == -FDT_ERR_NOTFOUND)
+    {
+        k_printf("[fdt] not gicv3 interrupt controller. gicv3 not initialized.\r\n");
+        return;
+    }
 
     size_cells = fdt_size_cells(fdt, offset);
     address_cells = fdt_address_cells(fdt, offset);
 
+    // TODO We alloc the redistributor address array in 
+    // the cpu init phase
     k_printf("gicv3 init.\r\n");
     k_printf("gic redistributor num: %d\r\n", gicv3_rdist_num);
 
@@ -243,13 +255,43 @@ void dt_gicv3_init(const void *fdt, int offset)
 
     arr += size_cells + address_cells;
 
+
+    fpp = fdt_get_property(fdt, offset, "redistributor-stride", &len);
+    if(len < 0 && len == -FDT_ERR_NOTFOUND)
+    {
+        rdist_size = 64 * 1024 * 2;
+    } else if (len < 0) {
+        k_printf("[fdt] something wrong.\r\n");
+        k_printf("gicv3 not init.");
+        return;
+    } else {
+        rdist_size = fdt32_to_cpu(*(fdt32_t *)fpp->data);
+    }
+
+    l = 0;
     for(i = rdist_region_num; i > 0;
         arr += size_cells + address_cells, i--)
-    {
-        k_printf("addr1: 0x%x, addr2: 0x%x, size1: 0x%x, size2: 0x%x\r\n",
-            fdt32_to_cpu(arr[0]), fdt32_to_cpu(arr[1]), 
-            fdt32_to_cpu(arr[2]), fdt32_to_cpu(arr[3]));
+    {   
+        tmp = fdt32_to_cpu(arr[3]);
+        tmp += ((uintptr_t)fdt32_to_cpu(arr[2])) << 32;
+
+        k = tmp / rdist_size;
+
+        address = fdt32_to_cpu(arr[1]);
+        address += ((uintptr_t)fdt32_to_cpu(arr[0])) << 32;
+
+        for(j = 0; j < k; j++)
+        {
+            gicv3_rdist_base[l] = address;
+            address += rdist_size;
+            l++;
+        }
     }
+
+    for(i = 0; i < gicv3_rdist_num; i++)
+    {
+        k_printf("gicv3 rdist %d address 0x%x. \r\n", i + 1, gicv3_rdist_base[i]);
+    }   
 
     k_printf("gicv3 init done. \r\n");
 }

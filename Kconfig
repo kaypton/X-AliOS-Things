@@ -1,0 +1,6 @@
+
+
+mainmenu "AliOS-Things Config"
+
+source "drivers/Kconfig"
+source "hardware/chip/Kconfig"

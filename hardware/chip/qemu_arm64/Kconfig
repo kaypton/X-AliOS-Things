@@ -1,0 +1,6 @@
+config QEMU_USE_GICV3
+    bool "QEMU aarch64 using GIC V3"
+
+config QEMU_AARCH64
+    bool "QEMU Virtual Machine on aarch64"
+    select GIC_V3 if QEMU_USE_GICV3 

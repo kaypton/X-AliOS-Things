@@ -1,9 +1,9 @@
 
-CC = gcc
-LD = ld 
+CC = aarch64-linux-gnu-gcc
+LD = aarch64-linux-gnu-ld 
 
-OBJDUMP = objdump
-OBJCOPY = objcopy 
+OBJDUMP = aarch64-linux-gnu-objdump
+OBJCOPY = aarch64-linux-gnu-objcopy 
 
 DEFINES = 
 #DEFINES += -DCONFIG_GIC_SINGLE_SECURITY_STATE 
@@ -147,7 +147,7 @@ QEMU_M_SECURE =off
 QEMU_MACHINE = virt,virtualization=${QEMU_M_VIRTUAL},secure=${QEMU_M_SECURE},gic-version=3
 QEMU_MEMORY = 3G
 QEMU_CPU = cortex-a72
-QEMU_SMP = 1
+QEMU_SMP = 8,sockets=2,cores=4,threads=1
 QEMU_FLAGS =
 
 get_dtb:
